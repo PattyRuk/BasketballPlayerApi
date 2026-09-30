@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="BasketballPlayerApi.BLL/BasketballPlayerApi.BLL.csproj" />
+  <Project Path="BasketballPlayerApi.DAL/BasketballPlayerApi.DAL.csproj" />
+  <Project Path="BasketballPlayerApi.Models/BasketballPlayerApi.Models.csproj" />
+  <Project Path="BasketballPlayerApi/BasketballPlayerApi.csproj" />
+</Solution>
