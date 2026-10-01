@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BasketballPlayerApi.DAL\BasketballPlayerApi.DAL.csproj" />
+    <ProjectReference Include="..\BasketballPlayerApi.Models\BasketballPlayerApi.Models.csproj" />
+  </ItemGroup>
+
 </Project>
