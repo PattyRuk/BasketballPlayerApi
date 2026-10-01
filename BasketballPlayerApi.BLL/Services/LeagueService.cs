@@ -1,6 +1,7 @@
 ﻿using BasketballPlayerApi.BLL.DTOs;
 using BasketballPlayerApi.DAL;
 using BasketballPlayerApi.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace BasketballPlayerApi.BLL.Services
             return player == null ? null : MapToOutputDto(player);
         }
 
-        // Dynamic Multi-Field Filtering, Search, and Pagination Endpoint Logic
+        // Multi-Field Filtering, Search, and Pagination Endpoint Logic
         public async Task<IEnumerable<PlayerOutputDto>> GetPlayersPagedAsync(int pageNumber, int pageSize, string? search, string? position)
         {
             var query = _context.Players.Include(p => p.Team).AsQueryable();
@@ -117,7 +118,7 @@ namespace BasketballPlayerApi.BLL.Services
             return true;
         }
 
-        // Complex Aggregation Query combining statistics across multiple entities
+        // Aggregation Query combining statistics across multiple entities
         public async Task<IEnumerable<TeamLeaderboardDto>> GetTeamLeaderboardAsync()
         {
             return await _context.Teams
@@ -135,7 +136,7 @@ namespace BasketballPlayerApi.BLL.Services
                 .ToListAsync();
         }
 
-        // Explicit manual mapping methods to optimize baseline system performance
+        // manual mapping method
         private static PlayerOutputDto MapToOutputDto(Player p) => new()
         {
             Id = p.Id,
