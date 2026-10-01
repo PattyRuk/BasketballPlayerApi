@@ -16,5 +16,20 @@ public class LeagueDbContext : DbContext
     public DbSet<Game> Games => Set<Game>();
     public DbSet<PlayerGameStat> PlayerGameStats => Set<PlayerGameStat>();
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Game>()
+            .HasOne(g => g.HomeTeam)
+            .WithMany()
+            .HasForeignKey(g => g.HomeTeamId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Game>()
+            .HasOne(g => g.AwayTeam)
+            .WithMany()
+            .HasForeignKey(g => g.AwayTeamId)
+            .OnDelete(DeleteBehavior.Restrict);
+    }
 }
