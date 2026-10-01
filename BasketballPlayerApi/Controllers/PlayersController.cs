@@ -38,6 +38,44 @@ namespace BasketballPlayerApi.Controllers
             return Ok(player);
         }
 
+        // 3. POST Create
+        [HttpPost]
+        public async Task<ActionResult<PlayerOutputDto>> Create([FromBody] PlayerInputDto payload)
+        {
+            try
+            {
+                var result = await _service.CreatePlayerAsync(payload);
+                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
+        // 4. PUT Update
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] PlayerInputDto payload)
+        {
+            try
+            {
+                var success = await _service.UpdatePlayerAsync(id, payload);
+                if (!success) return NotFound($"Target player entry {id} doesn't exist.");
+                return NoContent();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // 5. DELETE Entry
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var success = await _service.DeletePlayerAsync(id);
+            if (!success) return NotFound($"Target player entry {id} doesn't exist.");
+            return NoContent();
+        }
     }
 }
