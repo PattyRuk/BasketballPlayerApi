@@ -15,22 +15,18 @@ namespace BasketballPlayerApi
 
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
-
-            builder.Services.AddDbContext<LeagueDbContext>(options =>
-                options.UseInMemoryDatabase("BasketballLeagueDb"));
-
-            // Dependency Injection lifecycle registrations
+            builder.Services.AddDbContext<LeagueDbContext>(options => options.UseInMemoryDatabase("BasketballLeagueDb"));
             builder.Services.AddScoped<ILeagueService, LeagueService>();
 
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi(); // Exposes the native /openapi/v1.json spec file
+                app.MapOpenApi(); 
                 app.UseSwaggerUI(options =>
                 {
                     options.SwaggerEndpoint("/openapi/v1.json", "Basketball League API v1");
-                    options.RoutePrefix = "swagger"; // Access it at http://localhost:XXXX/swagger
+                    options.RoutePrefix = "swagger"; 
                 });
             }
 
@@ -57,7 +53,6 @@ namespace BasketballPlayerApi
                 });
             });
 
-            // 3. Routing and Core Pipeline Configurations
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
