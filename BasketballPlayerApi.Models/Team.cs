@@ -8,11 +8,11 @@ namespace BasketballPlayerApi.Models
         [Key]
         public int Id { get; set; }
 
-        [Required, MaxLength(100)]
-        public string Name { get; set; } = string.Empty;
+        [Required]
+        public string? Name { get; set; }
 
-        [Required, MaxLength(50)]
-        public string City { get; set; } = string.Empty;
+        [Required]
+        public string? City { get; set; }
 
         public ICollection<Player> Players { get; set; } = new List<Player>();
     }
