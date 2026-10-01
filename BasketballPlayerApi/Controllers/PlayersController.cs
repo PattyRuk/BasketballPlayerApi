@@ -16,7 +16,7 @@ namespace BasketballPlayerApi.Controllers
             _service = service;
         }
 
-        // 1. GET Page, Filtered List
+        // GET Page, Filtered List
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PlayerOutputDto>>> GetAll(
             [FromQuery] int pageNumber = 1,
@@ -24,21 +24,21 @@ namespace BasketballPlayerApi.Controllers
             [FromQuery] string? search = null,
             [FromQuery] string? position = null)
         {
-            if (pageNumber < 1 || pageSize < 1) return BadRequest("Pagination bounds must exceed zero.");
+            if (pageNumber < 1 || pageSize < 1) return BadRequest("Page number must exceed zero.");
             var records = await _service.GetPlayersPagedAsync(pageNumber, pageSize, search, position);
             return Ok(records);
         }
 
-        // 2. GET By ID
+        // GET By ID
         [HttpGet("{id:int}")]
         public async Task<ActionResult<PlayerOutputDto>> GetById(int id)
         {
             var player = await _service.GetPlayerByIdAsync(id);
-            if (player == null) return NotFound($"Player with Identifier {id} was not found.");
+            if (player == null) return NotFound($"Player with Id {id} was not found.");
             return Ok(player);
         }
 
-        // 3. POST Create
+        // POST Create
         [HttpPost]
         public async Task<ActionResult<PlayerOutputDto>> Create([FromBody] PlayerInputDto payload)
         {
@@ -53,14 +53,14 @@ namespace BasketballPlayerApi.Controllers
             }
         }
 
-        // 4. PUT Update
+        // PUT Update
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] PlayerInputDto payload)
         {
             try
             {
                 var success = await _service.UpdatePlayerAsync(id, payload);
-                if (!success) return NotFound($"Target player entry {id} doesn't exist.");
+                if (!success) return NotFound($"Target player {id} doesn't exist.");
                 return NoContent();
             }
             catch (ArgumentException ex)
@@ -69,12 +69,12 @@ namespace BasketballPlayerApi.Controllers
             }
         }
 
-        // 5. DELETE Entry
+        // DELETE 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _service.DeletePlayerAsync(id);
-            if (!success) return NotFound($"Target player entry {id} doesn't exist.");
+            if (!success) return NotFound($"Target player {id} doesn't exist.");
             return NoContent();
         }
     }
